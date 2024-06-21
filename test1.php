@@ -14,7 +14,7 @@ $connection = new TwitterOAuth($apiKey, $apiSecretKey, $accessToken, $accessToke
 
 try {
     // Fetch the user's timeline (e.g., the last 5 tweets)
-    $tweets = $connection->get("statuses/user_timeline", ["screen_name" => "your_username", "count" => 5]);
+    $tweets = $connection->get("statuses/user_timeline", ["screen_name" => "syedanasbukhari", "count" => 5]);
 
     if (isset($tweets->errors)) {
         echo "Error fetching tweets: " . $tweets->errors[0]->message;
