@@ -7,7 +7,7 @@ use GuzzleHttp\Exception\RequestException;
 
 function getTweetDetailsAndRandomRetweeter($bearerToken, $tweetId) {
     $client = new Client([
-        'base_uri' => 'https://api.twitter.com/2/',
+        'base_uri' => 'https://api.x.com/2/',
         'headers' => [
             'Authorization' => "Bearer $bearerToken",
             'Accept'        => 'application/json',
