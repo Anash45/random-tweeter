@@ -1,4 +1,5 @@
 <?php
+echo "LAtest Tweets: <br>";
 require "vendor/autoload.php"; // Load Composer's autoloader
 
 use Abraham\TwitterOAuth\TwitterOAuth;
