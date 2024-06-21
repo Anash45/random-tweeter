@@ -3,8 +3,7 @@ require "vendor/autoload.php"; // Load Composer's autoloader
 
 use Abraham\TwitterOAuth\TwitterOAuth;
 
-function pickRandomRetweeter($apiKey, $apiSecretKey, $accessToken, $accessTokenSecret, $tweetId)
-{
+function pickRandomRetweeter($apiKey, $apiSecretKey, $accessToken, $accessTokenSecret, $tweetId) {
     // Authenticate to Twitter using Access Token and Secret
     $connection = new TwitterOAuth($apiKey, $apiSecretKey, $accessToken, $accessTokenSecret);
 
@@ -12,9 +11,10 @@ function pickRandomRetweeter($apiKey, $apiSecretKey, $accessToken, $accessTokenS
         // Fetch the tweet's content
         $tweet = $connection->get("statuses/show", ["id" => $tweetId]);
 
+        print_r($tweet);
         // Check for errors in fetching the tweet
         if (isset($tweet->errors)) {
-            return "Error fetching tweet: " . $tweet->errors[0]->message;
+            return "Error fetching tweet: " . json_encode($tweet->errors);
         }
 
         // Print the tweet's content
@@ -26,7 +26,7 @@ function pickRandomRetweeter($apiKey, $apiSecretKey, $accessToken, $accessTokenS
 
         // Check for errors in fetching retweeters
         if (isset($retweeters->errors)) {
-            return "Error fetching retweeters: " . $retweeters->errors[0]->message;
+            return "Error fetching retweeters: " . json_encode($retweeters->errors);
         }
 
         // Check if there are any retweeters
@@ -40,6 +40,8 @@ function pickRandomRetweeter($apiKey, $apiSecretKey, $accessToken, $accessTokenS
             $user = $connection->get("users/show", ["user_id" => $userId]);
             if (isset($user->screen_name)) {
                 $users[] = $user->screen_name;
+            } else {
+                echo "Error fetching user details for user ID: " . $userId . PHP_EOL;
             }
         }
 
