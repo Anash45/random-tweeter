@@ -2,7 +2,7 @@
 require "vendor/autoload.php"; // Load Composer's autoloader
 
 use Abraham\TwitterOAuth\TwitterOAuth;
-
+echo 'Test 1 <br>';
 function pickRandomRetweeter($apiKey, $apiSecretKey, $accessToken, $accessTokenSecret, $tweetId) {
     // Authenticate to Twitter using Access Token and Secret
     $connection = new TwitterOAuth($apiKey, $apiSecretKey, $accessToken, $accessTokenSecret);
@@ -69,7 +69,7 @@ $apiKey = 'vneVnnSDejkyFJNY6t13ZL2zY';
 $apiSecretKey = 'KDDKloA4XFIJg90rNL1OA63KUsDJ7WvO0La0d0u0O2gmP4JaSz';
 $accessToken = '707955804532559872-WgcY1IlaDeB4Ew7BltLzJVjfUxDTwgY';
 $accessTokenSecret = 'EL81OehOAgKIOo7i3qKRGvWrOQYE1kgGimMYUm6j5vVev';
-$tweetId = 1350526503755288577; // Replace with the tweet ID you are interested in
+$tweetId = '1350526503755288577'; // Replace with the tweet ID you are interested in
 
 echo pickRandomRetweeter($apiKey, $apiSecretKey, $accessToken, $accessTokenSecret, $tweetId);
 ?>
