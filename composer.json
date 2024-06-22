@@ -1,6 +1,7 @@
 {
     "require": {
         "abraham/twitteroauth": "^7.0",
-        "guzzlehttp/guzzle": "^7.8"
+        "guzzlehttp/guzzle": "^7.8",
+        "noweh/twitter-api-v2-php": "^3.5"
     }
 }

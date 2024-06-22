@@ -18,8 +18,13 @@ class ComposerStaticInitadddfb3a79515b1c33ce09ff8d1720ba
             'Psr\\Http\\Message\\' => 17,
             'Psr\\Http\\Client\\' => 16,
         ),
+        'N' => 
+        array (
+            'Noweh\\TwitterApi\\' => 17,
+        ),
         'G' => 
         array (
+            'GuzzleHttp\\Subscriber\\Oauth\\' => 28,
             'GuzzleHttp\\Psr7\\' => 16,
             'GuzzleHttp\\Promise\\' => 19,
             'GuzzleHttp\\' => 11,
@@ -37,12 +42,20 @@ class ComposerStaticInitadddfb3a79515b1c33ce09ff8d1720ba
     public static $prefixDirsPsr4 = array (
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-message/src',
-            1 => __DIR__ . '/..' . '/psr/http-factory/src',
+            0 => __DIR__ . '/..' . '/psr/http-factory/src',
+            1 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/http-client/src',
+        ),
+        'Noweh\\TwitterApi\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/noweh/twitter-api-v2-php/src',
+        ),
+        'GuzzleHttp\\Subscriber\\Oauth\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/guzzlehttp/oauth-subscriber/src',
         ),
         'GuzzleHttp\\Psr7\\' => 
         array (
