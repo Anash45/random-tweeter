@@ -3,54 +3,35 @@ require 'vendor/autoload.php'; // Load Composer's autoloader
 
 use Noweh\TwitterApi\Client;
 
-function getTweetDetailsAndRandomRetweeter($bearerToken, $tweetId) {
+function getRecentTweets($bearerToken, $username, $count = 5) {
     // Initialize the Twitter API client with the Bearer Token
     $twitterClient = new Client($bearerToken);
 
     try {
-        // Fetch the tweet's content
-        $tweetResponse = $twitterClient->tweet()->show($tweetId)->performRequest();
-        $tweetData = json_decode($tweetResponse->getBody(), true);
+        // Fetch the user ID for the given username
+        $userResponse = $twitterClient->userLookup()->findByIdOrUsername($username)->performRequest();
+        $userData = json_decode($userResponse->getBody(), true);
 
-        if (isset($tweetData['errors'])) {
-            return "Error fetching tweet: " . json_encode($tweetData['errors']);
+        if (isset($userData['errors'])) {
+            return "Error fetching user: " . json_encode($userData['errors']);
         }
 
-        // Print the tweet's content
-        $tweetContent = $tweetData['data']['text'] ?? "No content available";
-        echo "Tweet Content: " . $tweetContent . PHP_EOL;
+        // Extract user ID
+        $userId = $userData['data']['id'];
 
-        // Fetch the list of users who retweeted the given tweet
-        $retweetersResponse = $twitterClient->tweet()->retweetedBy($tweetId)->performRequest();
-        $retweetersData = json_decode($retweetersResponse->getBody(), true);
+        // Fetch the recent tweets from the user's timeline
+        $tweetsResponse = $twitterClient->timeline()->getRecentTweets($userId)->performRequest();
+        
+        $tweetsData = json_decode($tweetsResponse->getBody(), true);
 
-        if (isset($retweetersData['errors'])) {
-            return "Error fetching retweeters: " . json_encode($retweetersData['errors']);
+        if (isset($tweetsData['errors'])) {
+            return "Error fetching tweets: " . json_encode($tweetsData['errors']);
         }
 
-        // Check if there are any retweeters
-        if (empty($retweetersData['data'])) {
-            return "No retweeters found for the given tweet.";
-        }
-
-        // Extract user details
-        $users = [];
-        foreach ($retweetersData['data'] as $user) {
-            $users[] = $user['username'];
-        }
-
-        // Print all retweeters
-        echo "List of Retweeters: " . PHP_EOL;
-        foreach ($users as $username) {
-            echo "@$username" . PHP_EOL;
-        }
-
-        // Pick a random user from the list
-        if (!empty($users)) {
-            $randomUser = $users[array_rand($users)];
-            echo "The randomly picked retweeter is: @" . $randomUser . PHP_EOL;
-        } else {
-            return "No valid retweeters found.";
+        // Print the recent tweets
+        echo "Recent Tweets from @$username:" . PHP_EOL;
+        foreach ($tweetsData['data'] as $tweet) {
+            echo "[" . $tweet['created_at'] . "] " . $tweet['text'] . PHP_EOL;
         }
 
     } catch (Exception $e) {
@@ -59,8 +40,9 @@ function getTweetDetailsAndRandomRetweeter($bearerToken, $tweetId) {
 }
 
 // Example usage
-$bearerToken = 'AAAAAAAAAAAAAAAAAAAAALizuQEAAAAAqVFFkqwlOvkatfo1ubrKmskHNwM%3Dy68JulrzjLrP51UACFZy4R4xGOirPH7WOomBusewffpipDuflR';
-$tweetId = '1350526503755288577'; // Replace with the tweet ID you are interested in
+$bearerToken = 'AAAAAAAAAAAAAAAAAAAAALizuQEAAAAAqVFFkqwlOvkatfo1ubrKmskHNwM%3Dy68JulrzjLrP51UACFZy4R4xGOirPH7WOomBusewffpipDuflR'; // Replace with your actual Bearer Token
+$username = 'syedanasbukhari'; // Twitter username of the profile
+$count = 5; // Number of recent tweets to fetch
 
-echo getTweetDetailsAndRandomRetweeter($bearerToken, $tweetId);
+echo getRecentTweets($bearerToken, $username, $count);
 ?>
